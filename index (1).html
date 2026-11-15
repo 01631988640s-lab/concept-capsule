@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Concept Capsule</title>
+<meta name="description" content="Chemistry and Biology courses by Sadman Ahmed Sakib Chowdhury, M.A.G Osmani Medical College. Daily quiz and teacher ratings.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F3F4FA; --surface:#FFFFFF; --ink:#141834; --muted:#565C83; --line:#DADDEE;
+  --chem:#4F3FD8; --on-chem:#FFFFFF; --chem-soft:#E8E5FB;
+  --bio:#0B8A5B; --on-bio:#FFFFFF; --bio-soft:#DDF3EA;
+  --warn:#C23B3B; --warn-soft:#FBE6E6; --star:#E8A200;
+  --font-display:'Bricolage Grotesque','Trebuchet MS',system-ui,sans-serif;
+  --font-body:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0D0F24; --surface:#161A38; --ink:#E8EAFB; --muted:#9BA1CA; --line:#2B3060;
+    --chem:#8F80FF; --on-chem:#0D0F24; --chem-soft:#26225A;
+    --bio:#35D49B; --on-bio:#06241A; --bio-soft:#11362B;
+    --warn:#FF8F8F; --warn-soft:#3A1B24; --star:#FFC93C;
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.55;margin:0}
+h1,h2,h3{font-family:var(--font-display);line-height:1.08;margin:0;text-wrap:balance}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--chem);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+section{padding-block:44px;scroll-margin-top:8px}
+.lead{color:var(--muted);max-width:60ch}
+.eyebrow{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.top{padding-block:14px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--font-display);font-weight:800;font-size:1.25rem}
+.nav{display:flex;flex-wrap:wrap;gap:6px 18px;font-weight:500;font-size:.95rem}
+.nav a{text-decoration:none;color:var(--muted);padding:4px 0}
+.nav a:hover{color:var(--ink)}
+.hero{padding-block:36px 28px}
+.hero-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:36px;align-items:center}
+.hero h1{font-size:clamp(2.5rem,8vw,4.4rem);font-weight:800;letter-spacing:-.02em}
+.hero .lead{margin-top:18px;font-size:1.08rem}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:999px;border:1px solid transparent;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;line-height:1.2}
+.btn-primary{background:var(--chem);color:var(--on-chem)}
+.btn-primary:hover{filter:brightness(1.08)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--chem)}
+.btn-sm{padding:8px 14px;font-size:.9rem}
+.capsule{width:100%;height:auto;display:block}
+.cap-a{fill:var(--chem)} .cap-b{fill:var(--bio)} .cap-seam{fill:var(--bg)} .cap-shine{fill:#fff;opacity:.2}
+.cap-t1{fill:var(--on-chem)} .cap-t2{fill:var(--on-bio)}
+.cap-t1,.cap-t2{font-family:var(--font-display);font-weight:800;font-size:34px}
+.eq{font-family:var(--font-mono);font-size:.86rem;margin-top:14px;overflow-wrap:anywhere}
+.eq-note{color:var(--muted);font-size:.86rem;margin-top:2px}
+.head{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.head h2{font-size:clamp(1.8rem,5vw,2.6rem);font-weight:800;letter-spacing:-.01em}
+.courses{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}
+.course{border-radius:22px;padding:26px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.course h3{font-size:1.9rem;font-weight:800}
+.course .price{font-family:var(--font-display);font-weight:800;font-size:2.6rem;line-height:1;font-variant-numeric:tabular-nums}
+.course .price small{font-size:1rem;font-weight:600;opacity:.85;margin-left:6px}
+.course .tag{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;opacity:.85}
+.course.chem{background:var(--chem);color:var(--on-chem)}
+.course.bio{background:var(--bio-soft);color:var(--ink);border:1px solid var(--bio)}
+.course.bio .price{color:var(--bio)}
+.course .btn{align-self:flex-start;margin-top:auto}
+.course.chem .btn{background:var(--on-chem);color:var(--chem)}
+.course.bio .btn{background:var(--bio);color:var(--on-bio)}
+.quiz-meta{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.chip{display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;background:var(--chem-soft);color:var(--chem);font-weight:700;font-size:.85rem}
+.chip.bio{background:var(--bio-soft);color:var(--bio)}
+.quiz-note{color:var(--muted);font-size:.92rem;margin-top:6px}
+.scorebar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:18px 0;padding:12px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line)}
+.qlist{display:flex;flex-direction:column;gap:14px}
+.q{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:20px;min-width:0}
+.q h3{font-size:1.15rem;font-weight:700;font-family:var(--font-body);line-height:1.4;display:flex;gap:10px}
+.q .qn{color:var(--chem);font-family:var(--font-display);font-weight:800;flex:none}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:11px 14px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:12px;font:inherit;cursor:pointer;min-width:0}
+.opt span:last-child{min-width:0;overflow-wrap:anywhere}
+.opt:hover:not(:disabled){border-color:var(--chem)}
+.opt:disabled{cursor:default;color:var(--ink)}
+.opt .letter{flex:none;width:26px;height:26px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--chem-soft);color:var(--chem);font-weight:700;font-size:.85rem}
+.opt.correct{border-color:var(--bio);background:var(--bio-soft)}
+.opt.correct .letter{background:var(--bio);color:var(--on-bio)}
+.opt.wrong{border-color:var(--warn);background:var(--warn-soft)}
+.opt.wrong .letter{background:var(--warn);color:var(--bg)}
+.opt.dim{opacity:.6}
+.why{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--bio-soft);font-size:.95rem}
+.empty{padding:22px;border:1px dashed var(--line);border-radius:16px;color:var(--muted)}
+.rate-grid,.enroll-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:24px;min-width:0}
+.teacher{display:flex;gap:16px;align-items:center}
+.avatar{flex:none;width:72px;height:72px;border-radius:36px;background:var(--chem);color:var(--on-chem);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:1.5rem}
+.teacher h3{font-size:1.35rem;font-weight:800}
+.teacher p{color:var(--muted);font-size:.95rem}
+.avg{display:flex;align-items:center;gap:16px;margin-top:22px;flex-wrap:wrap}
+.avg-num{font-family:var(--font-display);font-weight:800;font-size:3.2rem;line-height:1;font-variant-numeric:tabular-nums}
+.stars-ro{position:relative;display:inline-block;font-size:1.5rem;letter-spacing:2px;line-height:1;color:var(--line)}
+.stars-ro .fill{position:absolute;left:0;top:0;overflow:hidden;white-space:nowrap;color:var(--star);width:0}
+.avg-count{color:var(--muted);font-size:.9rem;margin-top:4px}
+.bars{display:flex;flex-direction:column;gap:6px;margin-top:20px}
+.bar-row{display:grid;grid-template-columns:18px 1fr 28px;gap:10px;align-items:center;font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar-row .track{height:8px;border-radius:4px;background:var(--bg);overflow:hidden}
+.bar-row .track i{display:block;height:100%;background:var(--star);width:0}
+.rate-box h3{font-size:1.3rem;font-weight:800}
+.stars{display:flex;gap:6px;margin-top:14px}
+.star{background:none;border:0;padding:4px;cursor:pointer;color:var(--line);line-height:0;border-radius:10px}
+.star svg{width:40px;height:40px;display:block}
+.star.on{color:var(--star)}
+.star:disabled{cursor:not-allowed}
+.hint{color:var(--muted);font-size:.92rem;margin-top:12px}
+.note{white-space:pre-line;padding:14px 16px;border-radius:14px;background:var(--chem-soft);margin-bottom:14px;overflow-wrap:anywhere}
+.price-line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+.price-line:last-of-type{border-bottom:0}
+footer{padding-block:30px 44px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line)}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="top" id="top">
+  <div class="wrap bar">
+    <a class="brand" href="#top" aria-label="Concept Capsule home">
+      <svg width="34" height="20" viewBox="0 0 34 20" aria-hidden="true"><clipPath id="bc"><rect x="1" y="1" width="32" height="18" rx="9"/></clipPath><g clip-path="url(#bc)"><rect class="cap-a" x="0" y="0" width="17" height="20"/><rect class="cap-b" x="17" y="0" width="17" height="20"/></g></svg>
+      <span>Concept Capsule</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#courses">Courses</a><a href="#quiz">Daily quiz</a><a href="#rate">Rate the teacher</a><a href="#enroll">Enroll</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Chemistry and Biology</p>
+      <h1>Concept Capsule</h1>
+      <p class="lead">Chemistry and Biology taught by Sadman Ahmed Sakib Chowdhury, M.A.G Osmani Medical College. Enroll in Chemistry for Tk 1500 and Biology comes free.</p>
+      <div class="cta">
+        <a class="btn btn-primary js-enroll" href="#enroll">Enroll now</a>
+        <a class="btn btn-ghost" href="#quiz">Try today's quiz</a>
+      </div>
+    </div>
+    <div>
+      <svg class="capsule" viewBox="0 0 520 190" role="img" aria-label="A capsule with Chemistry on one half and Biology on the other">
+        <defs><clipPath id="capClip"><rect x="8" y="30" width="504" height="130" rx="65"/></clipPath></defs>
+        <g clip-path="url(#capClip)">
+          <rect class="cap-a" x="0" y="0" width="262" height="190"/>
+          <rect class="cap-b" x="262" y="0" width="270" height="190"/>
+          <rect class="cap-seam" x="259" y="0" width="6" height="190"/>
+          <rect class="cap-shine" x="44" y="46" width="430" height="14" rx="7"/>
+        </g>
+        <text class="cap-t1" x="134" y="107" text-anchor="middle">Chemistry</text>
+        <text class="cap-t2" x="390" y="107" text-anchor="middle">Biology</text>
+      </svg>
+      <p class="eq">C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O + ATP</p>
+      <p class="eq-note">Cellular respiration, where the two subjects meet.</p>
+    </div>
+  </div>
+</section>
+
+<section id="courses">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Courses</p>
+      <h2>Two subjects, one enrollment</h2>
+      <p class="lead">Pay once for Chemistry. Biology is added at no extra cost.</p>
+    </div>
+    <div class="courses">
+      <article class="course chem">
+        <span class="tag">Course</span>
+        <h3>Chemistry</h3>
+        <p class="price">Tk 1500 <small>enrollment</small></p>
+        <a class="btn js-enroll" href="#enroll">Enroll in Chemistry</a>
+      </article>
+      <article class="course bio">
+        <span class="tag">Course</span>
+        <h3>Biology</h3>
+        <p class="price">Free <small>with Chemistry</small></p>
+        <a class="btn js-enroll" href="#enroll">Get Biology free</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Daily quiz</p>
+      <h2>A fresh quiz every day</h2>
+      <div class="quiz-meta"><span class="chip" id="quizDate">Sample quiz</span><span class="chip bio" id="quizSubject" hidden></span></div>
+      <p class="quiz-note" id="quizNote"></p>
+    </div>
+    <div class="scorebar"><span id="score">Answered 0 of 0</span><button type="button" class="btn btn-ghost btn-sm" id="quizReset" hidden>Start over</button></div>
+    <div class="qlist" id="quizList"></div>
+  </div>
+</section>
+
+<section id="rate">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Rating</p>
+      <h2>Rate the teacher</h2>
+    </div>
+    <div class="rate-grid">
+      <div class="card">
+        <div class="teacher">
+          <div class="avatar" aria-hidden="true">SC</div>
+          <div><h3>Sadman Ahmed Sakib Chowdhury</h3><p>M.A.G Osmani Medical College</p></div>
+        </div>
+        <div class="avg">
+          <div class="avg-num" id="avgNum">–</div>
+          <div>
+            <div class="stars-ro" aria-hidden="true">★★★★★<span class="fill" id="avgFill">★★★★★</span></div>
+            <div class="avg-count" id="avgCount">No ratings yet</div>
+          </div>
+        </div>
+        <div class="bars" id="bars"></div>
+      </div>
+      <div class="card rate-box">
+        <h3>Your rating out of 5</h3>
+        <div class="stars" id="stars" role="group" aria-label="Rate out of 5 stars"></div>
+        <p class="hint" id="rateHint">Tap a star to rate. A short form opens in a new tab.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="enroll">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Enroll</p>
+      <h2>Join Concept Capsule</h2>
+    </div>
+    <div class="enroll-grid">
+      <div class="card">
+        <div class="price-line"><span>Chemistry enrollment</span><strong>Tk 1500</strong></div>
+        <div class="price-line"><span>Biology enrollment</span><strong>Free with Chemistry</strong></div>
+      </div>
+      <div class="card">
+        <div class="note" id="enrollNote" hidden></div>
+        <a class="btn btn-primary js-enroll-form" id="enrollBtn" href="#enroll" target="_blank" rel="noopener">Fill the enrollment form</a>
+        <p class="hint" id="enrollHint"></p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Concept Capsule · Sadman Ahmed Sakib Chowdhury · M.A.G Osmani Medical College</div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+
+/* =====================================================================
+   SETTINGS: paste your links between the quotes, then save the file.
+   Leave a setting empty ('') and that part shows a "coming soon" state.
+   ===================================================================== */
+var CONFIG = {
+  // Google Sheet with the daily quiz, published to the web as CSV.
+  // Columns: Date | Subject | Question | A | B | C | D | Answer | Explanation
+  QUIZ_CSV_URL: '',
+
+  // Google Form for ratings (one question: linear scale 1 to 5).
+  RATING_FORM_URL: '',
+  // Optional: the entry number of the rating question, so a tapped star is pre-filled. Example: '1234567890'
+  RATING_ENTRY_ID: '',
+  // The rating form's responses sheet, published to the web as CSV.
+  RATING_CSV_URL: '',
+
+  // Google Form for enrollment (name and phone number).
+  ENROLL_FORM_URL: '',
+  // Message shown above the enrollment button, for example how to pay.
+  ENROLL_NOTE: ''
+};
+
+var $ = function(s, r){ return (r || document).querySelector(s); };
+function h(tag, attrs, kids){
+  var e = document.createElement(tag);
+  if (attrs) Object.keys(attrs).forEach(function(k){
+    var v = attrs[k];
+    if (k === 'class') e.className = v;
+    else if (k === 'text') e.textContent = v;
+    else if (k.slice(0,2) === 'on') e.addEventListener(k.slice(2), v);
+    else if (v === true) e.setAttribute(k, '');
+    else if (v !== false && v != null) e.setAttribute(k, v);
+  });
+  (kids || []).forEach(function(c){ if (c != null) e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c); });
+  return e;
+}
+function fmtDate(s){
+  var t = String(s || '').trim();
+  var m = t.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+  if (m) return new Date(+m[1], +m[2]-1, +m[3]).toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric'});
+  return t;
+}
+function parseCSV(text){
+  var rows = [], row = [], cur = '', q = false, i = 0, c;
+  text = String(text).replace(/^﻿/, '');
+  for (; i < text.length; i++){
+    c = text.charAt(i);
+    if (q){
+      if (c === '"'){ if (text.charAt(i+1) === '"'){ cur += '"'; i++; } else q = false; }
+      else cur += c;
+    } else if (c === '"') q = true;
+    else if (c === ','){ row.push(cur); cur = ''; }
+    else if (c === '\n' || c === '\r'){
+      if (c === '\r' && text.charAt(i+1) === '\n') i++;
+      row.push(cur); cur = ''; rows.push(row); row = [];
+    } else cur += c;
+  }
+  if (cur !== '' || row.length){ row.push(cur); rows.push(row); }
+  return rows.filter(function(r){ return r.some(function(x){ return String(x).trim() !== ''; }); });
+}
+
+/* ---------- enrollment links ---------- */
+(function(){
+  var url = CONFIG.ENROLL_FORM_URL.trim();
+  var btn = $('#enrollBtn'), hint = $('#enrollHint');
+  if (CONFIG.ENROLL_NOTE.trim()){ var n = $('#enrollNote'); n.textContent = CONFIG.ENROLL_NOTE.trim(); n.hidden = false; }
+  if (url){
+    btn.href = url;
+    document.querySelectorAll('.js-enroll').forEach(function(a){ a.href = '#enroll'; });
+  } else {
+    btn.removeAttribute('target'); btn.setAttribute('aria-disabled', 'true');
+    btn.style.opacity = '.55'; btn.style.pointerEvents = 'none';
+    hint.textContent = 'The enrollment form opens soon.';
+  }
+})();
+
+/* ---------- quiz ---------- */
+var SAMPLE = { date:'', subject:'Chemistry + Biology', sample:true, questions:[
+  { q:'What is the oxidation state of manganese in KMnO₄?', options:['+2','+4','+6','+7'], answer:3,
+    explain:'Potassium is +1 and the four oxygens are −2 each, which is −8. Mn must be +7 for the compound to be neutral.' },
+  { q:'Which organelle is the main site of ATP production in a eukaryotic cell?', options:['Golgi apparatus','Mitochondrion','Lysosome','Ribosome'], answer:1,
+    explain:'Most ATP is made by oxidative phosphorylation on the inner mitochondrial membrane.' },
+  { q:'Which of these is a noble gas?', options:['Nitrogen','Chlorine','Neon','Sulfur'], answer:2,
+    explain:'Neon is in group 18 and has a full outer shell.' }
+]};
+var quiz = SAMPLE, answers = {}, sig = '', quizNote = '';
+
+function buildCard(i){
+  var q = quiz.questions[i];
+  var done = answers[i] !== undefined;
+  var opts = h('div', {class:'opts'});
+  q.options.forEach(function(o, j){
+    var cls = 'opt';
+    if (done){ if (j === q.answer) cls += ' correct'; else if (j === answers[i]) cls += ' wrong'; else cls += ' dim'; }
+    opts.appendChild(h('button', {type:'button', class:cls, disabled:done, onclick:function(){
+      answers[i] = j;
+      var old = $('#q' + i); if (old) old.replaceWith(buildCard(i));
+      updateScore();
+    }}, [h('span', {class:'letter', text:'ABCD'.charAt(j)}), h('span', {text:o})]));
+  });
+  var card = h('article', {class:'q', id:'q' + i}, [
+    h('h3', null, [h('span', {class:'qn', text:'Q' + (i+1)}), h('span', {text:q.q})]),
+    opts
+  ]);
+  if (done && q.explain) card.appendChild(h('p', {class:'why', text:'Why: ' + q.explain}));
+  return card;
+}
+function updateScore(){
+  var n = quiz.questions.length, a = 0, c = 0;
+  Object.keys(answers).forEach(function(k){ a++; if (answers[k] === quiz.questions[k].answer) c++; });
+  $('#score').textContent = 'Answered ' + a + ' of ' + n + (a ? ' · ' + c + ' correct' : '');
+  $('#quizReset').hidden = a === 0;
+}
+function renderQuiz(){
+  var box = $('#quizList'); box.replaceChildren();
+  var live = !quiz.sample;
+  $('#quizDate').textContent = live && quiz.date ? fmtDate(quiz.date) : (live ? 'Today' : 'Sample quiz');
+  $('#quizSubject').textContent = quiz.subject || '';
+  $('#quizSubject').hidden = !quiz.subject;
+  $('#quizNote').textContent = quizNote || (live ? '' : "These are sample questions. Today's quiz appears here as soon as it is posted.");
+  if (!quiz.questions.length) box.appendChild(h('p', {class:'empty', text:'No questions have been posted yet. Check back soon.'}));
+  quiz.questions.forEach(function(_, i){ box.appendChild(buildCard(i)); });
+  updateScore();
+}
+function setQuiz(q){
+  quiz = q;
+  var s = JSON.stringify(q.questions);
+  if (s !== sig){ sig = s; answers = {}; }
+  renderQuiz();
+}
+$('#quizReset').addEventListener('click', function(){ answers = {}; renderQuiz(); });
+
+function quizFromCSV(text){
+  var rows = parseCSV(text);
+  if (rows.length < 2) return null;
+  var date = '', subject = '', qs = [];
+  rows.slice(1).forEach(function(r){
+    var cell = function(k){ return String(r[k] == null ? '' : r[k]).trim(); };
+    if (!date && cell(0)) date = cell(0);
+    if (!subject && cell(1)) subject = cell(1);
+    var opts = [cell(3), cell(4), cell(5), cell(6)];
+    var a = cell(7).toUpperCase(), ans = 'ABCD'.indexOf(a.charAt(0));
+    if (ans < 0 && /^[1-4]$/.test(a)) ans = +a - 1;
+    if (!cell(2) || opts.some(function(o){ return !o; }) || ans < 0) return;
+    qs.push({ q:cell(2), options:opts, answer:ans, explain:cell(8) });
+  });
+  return qs.length ? { date:date, subject:subject, questions:qs } : null;
+}
+async function loadQuiz(){
+  var url = CONFIG.QUIZ_CSV_URL.trim();
+  if (!url) return;
+  try {
+    var res = await fetch(url, {cache:'no-store'});
+    if (!res.ok) throw new Error('bad status');
+    var q = quizFromCSV(await res.text());
+    if (!q) throw new Error('no questions');
+    quizNote = ''; setQuiz(q);
+  } catch (e) {
+    quizNote = "Today's quiz could not be loaded right now. These sample questions are shown instead.";
+    renderQuiz();
+  }
+}
+
+/* ---------- ratings ---------- */
+var STAR_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon fill="currentColor" points="12,2 15,8.8 22.4,9.6 16.9,14.6 18.4,22 12,18.3 5.6,22 7.1,14.6 1.6,9.6 9,8.8"/></svg>';
+var starBtns = [], rateUrl = CONFIG.RATING_FORM_URL.trim();
+function starLink(n){
+  if (!rateUrl) return '';
+  if (CONFIG.RATING_ENTRY_ID.trim()){
+    return rateUrl + (rateUrl.indexOf('?') < 0 ? '?' : '&') + 'usp=pp_url&entry.' + encodeURIComponent(CONFIG.RATING_ENTRY_ID.trim()) + '=' + n;
+  }
+  return rateUrl;
+}
+function paintStars(n){ starBtns.forEach(function(b, i){ b.classList.toggle('on', i < n); }); }
+(function buildStars(){
+  var wrap = $('#stars');
+  for (var i = 1; i <= 5; i++){
+    (function(n){
+      var b = h('button', {type:'button', class:'star', 'aria-label':'Rate ' + n + ' out of 5', disabled:!rateUrl});
+      b.innerHTML = STAR_SVG;
+      b.addEventListener('mouseenter', function(){ if (rateUrl) paintStars(n); });
+      b.addEventListener('focus', function(){ if (rateUrl) paintStars(n); });
+      b.addEventListener('blur', function(){ paintStars(0); });
+      b.addEventListener('click', function(){ var u = starLink(n); if (u) window.open(u, '_blank', 'noopener'); });
+      starBtns.push(b); wrap.appendChild(b);
+    })(i);
+  }
+  wrap.addEventListener('mouseleave', function(){ paintStars(0); });
+  if (!rateUrl) $('#rateHint').textContent = 'Rating opens soon.';
+})();
+function renderRatings(vals){
+  var n = vals.length, sum = vals.reduce(function(a, b){ return a + b; }, 0);
+  var avg = n ? sum / n : 0;
+  $('#avgNum').textContent = n ? avg.toFixed(1) : '–';
+  $('#avgCount').textContent = n ? n + (n === 1 ? ' rating' : ' ratings') : 'No ratings yet';
+  $('#avgFill').style.width = (avg / 5 * 100) + '%';
+  var bars = $('#bars'); bars.replaceChildren();
+  for (var s = 5; s >= 1; s--){
+    var c = vals.filter(function(v){ return v === s; }).length;
+    var track = h('div', {class:'track'}, [h('i', {style:'width:' + (n ? c / n * 100 : 0) + '%'})]);
+    bars.appendChild(h('div', {class:'bar-row'}, [h('span', {text:String(s)}), track, h('span', {text:String(c)})]));
+  }
+}
+async function loadRatings(){
+  var url = CONFIG.RATING_CSV_URL.trim();
+  if (!url) return;
+  try {
+    var res = await fetch(url, {cache:'no-store'});
+    if (!res.ok) throw new Error('bad status');
+    var rows = parseCSV(await res.text());
+    if (!rows.length) return;
+    var col = -1;
+    rows[0].forEach(function(t, i){ if (col < 0 && /star|rating/i.test(t)) col = i; });
+    if (col < 0) col = rows[0].length > 1 ? 1 : 0;
+    var vals = [];
+    rows.slice(1).forEach(function(r){
+      var v = Math.round(Number(String(r[col] || '').trim()));
+      if (v >= 1 && v <= 5) vals.push(v);
+    });
+    renderRatings(vals);
+  } catch (e) {}
+}
+
+/* ---------- boot ---------- */
+setQuiz(SAMPLE);
+renderRatings([]);
+loadQuiz();
+loadRatings();
+})();
+</script>
+</body>
+</html>
